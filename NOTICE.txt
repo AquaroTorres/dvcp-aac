@@ -1,0 +1,19 @@
+Resolve AAC Bridge is an independent, experimental project. It is not an official
+Blackmagic Design plugin and is not affiliated with Blackmagic Design.
+
+FDK-AAC 2.0.3 is used without source modifications. Its complete license is in
+licenses/fdk-aac.txt. Binary releases include the exact source archive in
+third-party-source/fdk-source.tar.gz. The pinned URL and checksum are recorded
+in sources.lock.json.
+
+The build uses the codec SDK headers and host/plugin wrappers supplied with the
+user's DaVinci Resolve installation. These SDK files are not included in this
+source repository. The SDK documents distribution of compiled codec plugins.
+
+AAC export support, included in default builds, is built from hexitnz's
+Resolve-Linux-Studio-AAC-FDK-Encoder-plugin, pinned in sources.lock.json, with
+the small ESDS descriptor correction in packaging/encoder-esds.patch. Releases
+that include it also contain its original MIT license and source archive.
+
+All third-party components retain their own licenses and attribution. Any
+project-level license applies only to the new bridge, decoder, tools, and tests.

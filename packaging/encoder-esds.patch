@@ -1,0 +1,45 @@
+diff --git a/src/aac_encoder.cpp b/src/aac_encoder.cpp
+index 451db15..b9ebc6c 100644
+--- a/src/aac_encoder.cpp
++++ b/src/aac_encoder.cpp
+@@ -22,6 +22,23 @@ static const int32_t kDefaultBitRateKbps = 192;
+ // reject or that would produce poor-quality output for this format.
+ static const std::vector<int32_t> kAllowedBitRatesKbps = { 96, 128, 160, 192, 224, 256, 320 };
+ 
++// Resolve's audio writer expects an MPEG-4 ES_Descriptor cookie, matching
++// the cookie its QuickTime reader returns. A bare two-byte ASC is not an
++// esds descriptor and can disappear when the host builds the MP4 sample entry.
++static std::vector<uint8_t> MakeESDS(const uint8_t* asc, size_t size, uint32_t bitrate)
++{
++    if (!asc || size == 0 || size > 64) return {};
++    std::vector<uint8_t> v = {3, static_cast<uint8_t>(23 + size), 0, 1, 0,
++        4, static_cast<uint8_t>(15 + size), 0x40, 0x15, 0, 0, 0};
++    for (int repeat = 0; repeat < 2; ++repeat)
++        for (int shift = 24; shift >= 0; shift -= 8)
++            v.push_back(static_cast<uint8_t>(bitrate >> shift));
++    v.push_back(5); v.push_back(static_cast<uint8_t>(size));
++    v.insert(v.end(), asc, asc + size);
++    v.insert(v.end(), {6, 1, 2});
++    return v;
++}
++
+ class UIAACSettingsController
+ {
+ public:
+@@ -484,14 +501,14 @@ StatusCode AACEncoder::DoOpen(HostBufferRef* p_pBuff)
+     // config blob to write verbatim instead of inferring its own.
+     if (info.confSize > 0 && info.confSize <= sizeof(info.confBuf))
+     {
+-        m_MagicCookie.assign(info.confBuf, info.confBuf + info.confSize);
++        m_MagicCookie = MakeESDS(info.confBuf, info.confSize, bitRate);
+ 
+         p_pBuff->SetProperty(pIOPropMagicCookie, propTypeUInt8, m_MagicCookie.data(), m_MagicCookie.size());
+ 
+         uint32_t magicCookieType = 'esds';
+         p_pBuff->SetProperty(pIOPropMagicCookieType, propTypeUInt32, &magicCookieType, 1);
+ 
+-        g_Log(logLevelInfo, "AAC Plugin :: AudioSpecificConfig forwarded to muxer (%u bytes)", info.confSize);
++        g_Log(logLevelInfo, "AAC Plugin :: ES descriptor forwarded to muxer (%zu bytes, ASC %u bytes)", m_MagicCookie.size(), info.confSize);
+     }
+     else
+     {

@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "image": "docker.io/library/rockylinux@sha256:2d05a9266523bbf24f33ebc3a9832e4d5fd74b973c220f2204ca802286aa275d",
+  "fdk": {
+    "url": "https://codeload.github.com/mstorsjo/fdk-aac/tar.gz/716f4394641d53f0d79c9ddac3fa93b03a49f278",
+    "commit": "716f4394641d53f0d79c9ddac3fa93b03a49f278",
+    "sha256": "63048f3c3595f161309ea967531d2b99de71c41ecb1f173d44eaccd89c8133c3"
+  },
+  "encoder": {
+    "url": "https://codeload.github.com/hexitnz/Resolve-Linux-Studio-AAC-FDK-Encoder-plugin/tar.gz/232a5e04cb605236541cf0cd08bde3eed9f1f20a",
+    "commit": "232a5e04cb605236541cf0cd08bde3eed9f1f20a",
+    "sha256": "6a3a055ab9671c80593ddc5c96d44609a1b071168c9b6f5c54edfe2d3d4bcfeb"
+  }
+}

@@ -107,7 +107,9 @@ FDK-AAC and do not require the system's FFmpeg.
 
 ## Licensing
 
-A project license has not been selected yet. Third-party notices and licenses
-are preserved in `NOTICE.txt` and `licenses/`; dependency source is included in
-binary releases. Choose a license for the new project code before presenting
-the repository as open source.
+The original code in this project is licensed under the GNU General Public
+License version 2 only (`GPL-2.0-only`). See [LICENSE](LICENSE) for the full text.
+
+Third-party components retain their own licenses and attribution, as documented
+in [NOTICE.txt](NOTICE.txt) and [licenses/](licenses/). Dependency source is
+included in binary releases.

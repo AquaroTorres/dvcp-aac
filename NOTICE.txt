@@ -15,5 +15,6 @@ Resolve-Linux-Studio-AAC-FDK-Encoder-plugin, pinned in sources.lock.json, with
 the small ESDS descriptor correction in packaging/encoder-esds.patch. Releases
 that include it also contain its original MIT license and source archive.
 
-All third-party components retain their own licenses and attribution. Any
-project-level license applies only to the new bridge, decoder, tools, and tests.
+The original project code is licensed under the GNU General Public License
+version 2 only (GPL-2.0-only); see LICENSE for the full text. All third-party
+components retain their own licenses and attribution.
